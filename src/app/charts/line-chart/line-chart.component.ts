@@ -1,5 +1,6 @@
 import { AfterViewInit, Component, ElementRef, OnInit, ViewChild } from '@angular/core';
 import { Chart } from '@antv/g2';
+import { customChartEvents } from 'src/app/util/custom-event.util';
 import { chartData } from './mock.data';
 
 @Component({
@@ -64,6 +65,7 @@ export class LineChartComponent implements OnInit,AfterViewInit {
       .shape('circle');
 
     this.chart.render();
+    customChartEvents(this.chart);
   }
 
 }
