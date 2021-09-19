@@ -18,6 +18,7 @@
     "@angular/platform-browser": "~12.0.4",
     "@angular/platform-browser-dynamic": "~12.0.4",
     "@angular/router": "~12.0.4",
+    "@antv/data-set": "^0.11.8",
     "@antv/g2": "^4.1.25",
     "ng-zorro-antd-mobile": "^5.0.0",
     "rxjs": "~6.6.0",
