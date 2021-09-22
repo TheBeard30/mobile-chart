@@ -58,11 +58,17 @@ export class LineChartComponent implements OnInit,AfterViewInit {
       .color('city')
       .shape('smooth');
 
-    this.chart
-      .point()
-      .position('month*temperature')
-      .color('city')
-      .shape('circle');
+    // this.chart
+    //   .point()
+    //   .position('month*temperature')
+    //   .color('city')
+    //   .shape('circle');
+
+    
+    this.chart.option('scrollbar', {
+      // 滚动条类型： 'horizontal' / 'vertical'
+      type: 'horizontal',
+    });  
 
     this.chart.render();
     customChartEvents(this.chart);
