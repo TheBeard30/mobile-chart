@@ -1,5 +1,6 @@
 import { AfterViewInit, Component, ElementRef, OnInit, ViewChild } from '@angular/core';
 import { Chart } from '@antv/g2';
+import { pointGeometrySetting,lineGeometrySetting } from 'src/app/util/chart.setting';
 import { customChartEvents } from 'src/app/util/custom-event.util';
 import { chartData } from './mock.data';
 
@@ -52,21 +53,9 @@ export class LineChartComponent implements OnInit,AfterViewInit {
       },
     });
 
-    this.chart
-      .line()
-      .position('month*temperature')
-      .color('city')
-      .shape('smooth');
-
-    // this.chart
-    //   .point()
-    //   .position('month*temperature')
-    //   .color('city')
-    //   .shape('circle');
-
-    
+    lineGeometrySetting(this.chart,{},'month','temperature','city','smooth');;
+    pointGeometrySetting(this.chart,{},'month','temperature','city','circle');
     this.chart.option('scrollbar', {
-      // 滚动条类型： 'horizontal' / 'vertical'
       type: 'horizontal',
     });  
 
