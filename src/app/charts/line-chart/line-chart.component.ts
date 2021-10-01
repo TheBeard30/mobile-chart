@@ -1,5 +1,7 @@
 import { AfterViewInit, Component, ElementRef, OnInit, ViewChild } from '@angular/core';
 import { Chart } from '@antv/g2';
+import { fromEvent } from 'rxjs';
+import { debounceTime } from 'rxjs/operators';
 import { pointGeometrySetting,lineGeometrySetting } from 'src/app/util/chart.setting';
 import { customChartEvents } from 'src/app/util/custom-event.util';
 import { chartData } from './mock.data';
@@ -19,6 +21,7 @@ export class LineChartComponent implements OnInit,AfterViewInit {
   
 
   ngOnInit(): void {
+    fromEvent(window,'resize').pipe(debounceTime(500)).subscribe(ev => this.chart.forceFit());
   }
 
   ngAfterViewInit(): void {
