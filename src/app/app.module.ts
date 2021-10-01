@@ -8,11 +8,13 @@ import { FormsModule } from '@angular/forms';
 import { HttpClientModule } from '@angular/common/http';
 import { NgZorroAntdMobileModule } from 'ng-zorro-antd-mobile';
 import { LineChartComponent } from './charts/line-chart/line-chart.component';
+import { CustomG2Directive } from './directives/custom-g2.directive';
 
 @NgModule({
   declarations: [
     AppComponent,
-    LineChartComponent
+    LineChartComponent,
+    CustomG2Directive
   ],
   imports: [
     BrowserModule,

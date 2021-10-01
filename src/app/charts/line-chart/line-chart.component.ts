@@ -58,7 +58,6 @@ export class LineChartComponent implements OnInit,AfterViewInit {
     this.chart.option('scrollbar', {
       type: 'horizontal',
     });  
-
     this.chart.render();
     customChartEvents(this.chart);
   }
