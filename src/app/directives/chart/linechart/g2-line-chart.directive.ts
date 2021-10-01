@@ -1,12 +1,12 @@
 import { AfterViewInit, Directive, ElementRef, OnInit } from '@angular/core';
 import { Chart } from '@antv/g2';
-import { chartData } from '../charts/line-chart/mock.data';
-import { lineGeometrySetting, pointGeometrySetting } from '../util/chart.setting';
+import { chartData } from '../../../charts/line-chart/mock.data';
+import { lineGeometrySetting, pointGeometrySetting } from '../../../util/chart.setting';
 
 @Directive({
-  selector: '[appCustomG2]'
+  selector: '[g2-line-chart]'
 })
-export class CustomG2Directive implements OnInit,AfterViewInit {
+export class G2LineChartDirective implements OnInit,AfterViewInit {
 
   chart: Chart;
 
