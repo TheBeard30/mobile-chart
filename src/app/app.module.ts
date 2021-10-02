@@ -12,13 +12,21 @@ import { G2LineChartDirective } from './directives/chart/linechart/g2-line-chart
 import { G2BarChartDirective } from './directives/chart/barchart/g2-bar-chart.directive';
 import { BarChartComponent } from './charts/bar-chart/bar-chart.component';
 
+const COMPONENTS = [
+  LineChartComponent,
+  BarChartComponent
+];
+
+const DIRECTIVES = [
+  G2LineChartDirective,
+  G2BarChartDirective
+];
+
 @NgModule({
   declarations: [
     AppComponent,
-    LineChartComponent,
-    G2LineChartDirective,
-    G2BarChartDirective,
-    BarChartComponent
+    ...COMPONENTS,
+    ...DIRECTIVES
   ],
   imports: [
     BrowserModule,

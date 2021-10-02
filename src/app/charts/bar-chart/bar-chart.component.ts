@@ -1,11 +1,12 @@
 import { AfterViewInit, Component, ElementRef, OnInit, ViewChild } from '@angular/core';
-import { Chart } from '@antv/g2';
+import { Chart, View } from '@antv/g2';
 import { registerTriangleShape } from 'src/app/shape/interval/triangle.shape';
+import { ChartService } from '../service/chart.service';
 
 @Component({
   selector: 'app-bar-chart',
   templateUrl: './bar-chart.component.html',
-  styleUrls: ['./bar-chart.component.less']
+  styleUrls: ['./bar-chart.component.less','../style/common.style.less']
 })
 export class BarChartComponent implements OnInit,AfterViewInit {
 
@@ -13,7 +14,16 @@ export class BarChartComponent implements OnInit,AfterViewInit {
 
   @ViewChild("container")  container: ElementRef; 
 
-  constructor() { }
+  themeClass:{'dark-theme': boolean};
+
+  constructor(
+    private chartService: ChartService
+  ) { 
+    setTimeout(() => {
+      const observable = this.chartService.subscribeThemeSubject(this.chart);
+      observable.subscribe(theme => this.themeClass = {'dark-theme': theme == 'dark'});
+    });
+  }
 
   ngOnInit(): void {
     registerTriangleShape();
@@ -37,7 +47,7 @@ export class BarChartComponent implements OnInit,AfterViewInit {
       container: element,
       autoFit: true
     });
-
+    // this.chart.theme('dark');
     this.chart.data(data);
     this.chart.interval().position('type*value').shape('triangle');
     this.chart.interaction('element-active');

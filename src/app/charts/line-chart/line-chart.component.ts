@@ -1,27 +1,41 @@
-import { AfterViewInit, Component, ElementRef, OnInit, ViewChild } from '@angular/core';
+import { AfterViewInit, Component, ElementRef, OnDestroy, OnInit, ViewChild } from '@angular/core';
 import { Chart } from '@antv/g2';
 import { fromEvent } from 'rxjs';
 import { debounceTime } from 'rxjs/operators';
 import { pointGeometrySetting,lineGeometrySetting } from 'src/app/util/chart.setting';
 import { customChartEvents } from 'src/app/util/custom-event.util';
+import { ChartService } from '../service/chart.service';
 import { chartData } from './mock.data';
 
 @Component({
   selector: 'app-line-chart',
   templateUrl: './line-chart.component.html',
-  styleUrls: ['./line-chart.component.less']
+  styleUrls: ['./line-chart.component.less','../style/common.style.less']
 })
-export class LineChartComponent implements OnInit,AfterViewInit {
+export class LineChartComponent implements OnInit,AfterViewInit,OnDestroy {
 
   @ViewChild("container") container!: ElementRef;
 
   chart!: Chart;
 
-  constructor() { }
+  themeClass:{'dark-theme': boolean};
+
+  constructor(
+    private chartService: ChartService
+  ) { 
+    setTimeout(() => {
+      const observable = this.chartService.subscribeThemeSubject(this.chart);
+      observable.subscribe(theme => this.themeClass = {'dark-theme': theme == 'dark'});
+    });
+  }
   
 
   ngOnInit(): void {
     fromEvent(window,'resize').pipe(debounceTime(500)).subscribe(ev => this.chart.forceFit());
+  }
+
+  ngOnDestroy(): void{
+
   }
 
   ngAfterViewInit(): void {

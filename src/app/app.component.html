@@ -1,5 +1,5 @@
-<!-- NG-ZORRO-MOBILE -->
-<div style="height: 100%;">
+<div class="container" [ngClass]="themeClass">
     <app-line-chart></app-line-chart>
     <app-bar-chart></app-bar-chart>
+    <div Button [type]="'primary'" (onClick)="changeTheme($event)">改变主题</div>
 </div>

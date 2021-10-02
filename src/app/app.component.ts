@@ -1,4 +1,5 @@
 import { Component } from '@angular/core';
+import {ChartService} from "./charts/service/chart.service";
 
 @Component({
   selector: 'app-root',
@@ -6,5 +7,18 @@ import { Component } from '@angular/core';
   styleUrls: ['./app.component.less']
 })
 export class AppComponent {
-  title = 'mobile-chart';
+
+  theme = 'default';
+
+  themeClass: {'dark-theme': boolean};
+
+  constructor(private chartService: ChartService) {
+  }
+
+  changeTheme(ev): void{
+    this.theme = this.theme == 'default' ? 'dark' : 'default';
+    this.chartService.changeThemeSubject.next(this.theme);
+    this.themeClass = {'dark-theme': this.theme == 'dark' };
+  }
+
 }
