@@ -56,10 +56,15 @@ export class BarChartComponent implements OnInit,AfterViewInit {
     this.chart.render();
   }
 
+
+  /**
+   * 添加趋势线
+   * @param {Chart}  chart  图表实例 
+   * @param {Array}  data   图表数据
+   */
   createTrendLine(chart: Chart,data: Array<any>): void{
     const dataset = new DataSet();
     const dataView = dataset.createView().source(data);
-    console.log(dataView);
     dataView.transform({
       type: 'regression',
       method: 'polynomial',
@@ -67,7 +72,6 @@ export class BarChartComponent implements OnInit,AfterViewInit {
       bandwidth: 0.1,
       as: ['id', 'value']
     });
-    console.log(dataView);
     const view = chart.createView();
     view.axis(false);
     view.data(dataView.rows);
