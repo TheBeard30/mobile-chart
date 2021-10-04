@@ -3,6 +3,8 @@ import { Chart, View } from '@antv/g2';
 import { registerTriangleShape } from 'src/app/shape/interval/triangle.shape';
 import { ChartService } from '../service/chart.service';
 import DataSet from '@antv/data-set';
+import { fromEvent } from 'rxjs';
+import { debounceTime } from 'rxjs/operators';
 
 @Component({
   selector: 'app-bar-chart',
@@ -28,6 +30,7 @@ export class BarChartComponent implements OnInit,AfterViewInit {
 
   ngOnInit(): void {
     registerTriangleShape();
+    fromEvent(window,'resize').pipe(debounceTime(500)).subscribe(ev => this.chart.forceFit());
   }
 
   ngAfterViewInit(): void{
@@ -46,7 +49,8 @@ export class BarChartComponent implements OnInit,AfterViewInit {
 
     this.chart = new Chart({
       container: element,
-      autoFit: true
+      width: rect.width,
+      height: rect.height
     });
     const view = this.chart.createView();
     view.data(data);
