@@ -1,4 +1,5 @@
 import { AfterViewInit, Component, ElementRef, OnDestroy, OnInit, ViewChild } from '@angular/core';
+import { Router } from '@angular/router';
 import { Chart } from '@antv/g2';
 import { fromEvent } from 'rxjs';
 import { debounceTime } from 'rxjs/operators';
@@ -21,7 +22,8 @@ export class LineChartComponent implements OnInit,AfterViewInit,OnDestroy {
   themeClass:{'dark-theme': boolean};
 
   constructor(
-    private chartService: ChartService
+    private chartService: ChartService,
+    private router: Router
   ) { 
     setTimeout(() => {
       const observable = this.chartService.subscribeThemeSubject(this.chart);
@@ -77,6 +79,10 @@ export class LineChartComponent implements OnInit,AfterViewInit,OnDestroy {
     });  
     this.chart.render();
     customChartEvents(this.chart);
+  }
+
+  landscape(ev){
+    this.router.navigate(['landscape']);
   }
 
 }

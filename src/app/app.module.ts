@@ -12,6 +12,8 @@ import { G2LineChartDirective } from './directives/chart/linechart/g2-line-chart
 import { G2BarChartDirective } from './directives/chart/barchart/g2-bar-chart.directive';
 import { BarChartComponent } from './charts/bar-chart/bar-chart.component';
 import { PieChartComponent } from './charts/pie-chart/pie-chart.component';
+import { LandscapeComponent } from './landscape/landscape.component';
+import { MainComponent } from './main/main.component';
 
 const COMPONENTS = [
   LineChartComponent,
@@ -28,7 +30,9 @@ const DIRECTIVES = [
     AppComponent,
     ...COMPONENTS,
     ...DIRECTIVES,
-    PieChartComponent
+    PieChartComponent,
+    LandscapeComponent,
+    MainComponent
   ],
   imports: [
     BrowserModule,
