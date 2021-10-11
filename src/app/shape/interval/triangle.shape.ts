@@ -17,7 +17,7 @@ export function registerTriangleShape(){
         // 2. 绘制
         draw(cfg, group) {
           const points = this.parsePoints(cfg.points); // 将0-1空间的坐标转换为画布坐标
-          console.log(cfg);
+          // console.log(cfg);
           const polygon = group.addShape('path', {
             attrs: {
               path: [

@@ -1,10 +1,12 @@
 import { AfterViewInit, Component, ElementRef, OnDestroy, OnInit, ViewChild } from '@angular/core';
 import { Router } from '@angular/router';
+import { Point } from '@antv/g-base';
 import { Chart } from '@antv/g2';
 import { fromEvent } from 'rxjs';
 import { debounceTime } from 'rxjs/operators';
 import { pointGeometrySetting,lineGeometrySetting } from 'src/app/util/chart.setting';
 import { customChartEvents } from 'src/app/util/custom-event.util';
+import { showXTooltipCrosshairsTextConfig } from '../config/tooltip.config';
 import { ChartService } from '../service/chart.service';
 import { chartData } from './mock.data';
 
@@ -58,11 +60,7 @@ export class LineChartComponent implements OnInit,AfterViewInit,OnDestroy {
         nice: true,
       },
     });
-
-    this.chart.tooltip({
-      showCrosshairs: true,
-      shared: true,
-    });
+    this.chart.tooltip(showXTooltipCrosshairsTextConfig);
 
     this.chart.axis('temperature', {
       label: {
@@ -77,6 +75,7 @@ export class LineChartComponent implements OnInit,AfterViewInit,OnDestroy {
     this.chart.option('scrollbar', {
       type: 'horizontal',
     });  
+    this.chart.legend(false);
     this.chart.render();
     customChartEvents(this.chart);
   }
