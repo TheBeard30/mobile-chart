@@ -1,5 +1,5 @@
 import { AfterViewInit, Component, ElementRef, OnInit, ViewChild } from '@angular/core';
-import { Chart, View } from '@antv/g2';
+import { Chart, Element, Geometry, IGroup, View } from '@antv/g2';
 import { registerTriangleShape } from 'src/app/shape/interval/triangle.shape';
 import { ChartService } from '../service/chart.service';
 import DataSet from '@antv/data-set';
@@ -54,10 +54,71 @@ export class BarChartComponent implements OnInit,AfterViewInit {
     });
     const view = this.chart.createView();
     view.data(data);
-    view.interval().position('type*value').shape('triangle');
+    const geometry = view.interval().position('type*value').color('type');
     view.interaction('element-active');
     this.createTrendLine(this.chart,data);
+    
     this.chart.render();
+    setTimeout(() => {
+      this.createPath(view);
+    },1000);
+  }
+
+  /**
+   * 添加路径
+   * @param {View}  view  视图 
+   */
+  createPath(view: View): void{
+    console.log(view);
+    const geometry = view.geometries.find(geom => geom.type == 'interval');
+    if(geometry){
+      const elements = geometry.getElements();
+      const linkGroup = view.foregroundGroup.addGroup({capture: false});
+      const group = linkGroup.addGroup();
+      const count = elements.length;
+      elements.forEach((element,index) => {
+        if (index < count - 1) {
+          const nextElement = elements[index + 1];
+          this.addLinkShape(group, element, nextElement);
+        }
+      });
+    }
+  }
+
+  /**
+   * 添加连接的图形
+   * @param group 
+   * @param element 
+   * @param nextElement 
+   */
+  private addLinkShape(group: IGroup, element: Element, nextElement: Element) {
+    group.addShape({
+      type: 'path',
+      attrs: {
+        opacity: 0.3,
+        fill: '#0b53b0',
+        path: this.getLinkPath(element, nextElement),
+      },
+    });
+  }
+
+  /**
+   * 获取连接的路径
+   * @param {Element}   element        当前的节点
+   * @param {Element}   nextElement    下一个节点
+   * @returns 
+   */
+  private getLinkPath(element: Element, nextElement: Element) {
+    const bbox = element.shape.getCanvasBBox();
+    const nextBBox = nextElement.shape.getCanvasBBox();
+    const path = [
+      ['M', bbox.maxX, bbox.minY],
+      ['L', nextBBox.minX, nextBBox.minY],
+      ['L', nextBBox.minX, nextBBox.maxY],
+      ['L', bbox.maxX, bbox.maxY],
+      ['Z'],
+    ];
+    return path;
   }
 
 
