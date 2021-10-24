@@ -14,6 +14,7 @@ import { BarChartComponent } from './charts/bar-chart/bar-chart.component';
 import { PieChartComponent } from './charts/pie-chart/pie-chart.component';
 import { LandscapeComponent } from './landscape/landscape.component';
 import { MainComponent } from './main/main.component';
+import { PlaygroundModule } from './playground/playground.module';
 
 const COMPONENTS = [
   LineChartComponent,
@@ -40,7 +41,8 @@ const DIRECTIVES = [
     BrowserAnimationsModule,
     FormsModule,
     HttpClientModule,
-    NgZorroAntdMobileModule
+    NgZorroAntdMobileModule,
+    PlaygroundModule
   ],
   providers: [],
   bootstrap: [AppComponent]
