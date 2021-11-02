@@ -10,11 +10,15 @@ function lineGeometrySetting(chart: Chart,options: Record<string,any>,xField: st
     return chart.line(options).position(`${xField}*${yField}`).color(colorField).shape(shapeType);
 }
 
+function areaGeometrySetting(chart: Chart,options: Record<string,any>,xField: string, yField: string,colorField?: string,shapeType?: string,style?: {[p: string]: any}): Geometry{
+    return chart.area(options).position(`${xField}*${yField}`).color(colorField).shape(shapeType).style(style);
+}
+
 
 function coordinate(chart: Chart,option: CoordinateOption): CoordinateController{
     return chart.coordinate(option);
 }
 
 
-export {pointGeometrySetting,lineGeometrySetting,coordinate};
+export {pointGeometrySetting,lineGeometrySetting,areaGeometrySetting, coordinate};
 

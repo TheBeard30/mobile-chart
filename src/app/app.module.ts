@@ -15,6 +15,7 @@ import { PieChartComponent } from './charts/pie-chart/pie-chart.component';
 import { LandscapeComponent } from './landscape/landscape.component';
 import { MainComponent } from './main/main.component';
 import { PlaygroundModule } from './playground/playground.module';
+import { AreaChartComponent } from './charts/area-chart/area-chart.component';
 
 const COMPONENTS = [
   LineChartComponent,
@@ -33,7 +34,8 @@ const DIRECTIVES = [
     ...DIRECTIVES,
     PieChartComponent,
     LandscapeComponent,
-    MainComponent
+    MainComponent,
+    AreaChartComponent
   ],
   imports: [
     BrowserModule,
