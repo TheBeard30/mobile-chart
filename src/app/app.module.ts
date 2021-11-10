@@ -6,6 +6,7 @@ import { AppComponent } from './app.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { FormsModule } from '@angular/forms';
 import { HttpClientModule } from '@angular/common/http';
+import {OverlayModule} from '@angular/cdk/overlay';
 import { NgZorroAntdMobileModule } from 'ng-zorro-antd-mobile';
 import { LineChartComponent } from './charts/line-chart/line-chart.component';
 import { G2LineChartDirective } from './directives/chart/linechart/g2-line-chart.directive';
@@ -16,6 +17,9 @@ import { LandscapeComponent } from './landscape/landscape.component';
 import { MainComponent } from './main/main.component';
 import { PlaygroundModule } from './playground/playground.module';
 import { AreaChartComponent } from './charts/area-chart/area-chart.component';
+import { SearchComponent } from './search/search.component';
+import { SelectPickerComponent } from './datapicker/select-picker/select-picker.component';
+
 
 const COMPONENTS = [
   LineChartComponent,
@@ -35,7 +39,9 @@ const DIRECTIVES = [
     PieChartComponent,
     LandscapeComponent,
     MainComponent,
-    AreaChartComponent
+    AreaChartComponent,
+    SearchComponent,
+    SelectPickerComponent
   ],
   imports: [
     BrowserModule,
@@ -43,6 +49,7 @@ const DIRECTIVES = [
     BrowserAnimationsModule,
     FormsModule,
     HttpClientModule,
+    OverlayModule,
     NgZorroAntdMobileModule,
     PlaygroundModule
   ],

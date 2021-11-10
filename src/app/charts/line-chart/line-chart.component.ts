@@ -25,7 +25,8 @@ export class LineChartComponent implements OnInit,AfterViewInit,OnDestroy {
 
   constructor(
     private chartService: ChartService,
-    private router: Router
+    private router: Router,
+    private elementRef: ElementRef
   ) { 
     setTimeout(() => {
       const observable = this.chartService.subscribeThemeSubject(this.chart);
@@ -81,7 +82,10 @@ export class LineChartComponent implements OnInit,AfterViewInit,OnDestroy {
   }
 
   landscape(ev){
-    this.router.navigate(['landscape']);
+    const element: HTMLElement = this.elementRef.nativeElement.querySelector('.wrapper');
+    element.style.transform = "rotate(90deg)";
+    element.style.width = "100%";
+    element.style.height = "100%";
   }
 
 }
