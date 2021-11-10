@@ -1,4 +1,4 @@
-<div class="panel">
+<div class="panel" [@open-close]="isOpen ? 'open' : 'close'">
     <div *ngFor="let item of selectOptions.data">
         {{item}}
     </div>

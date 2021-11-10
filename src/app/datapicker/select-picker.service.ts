@@ -14,13 +14,15 @@ export class SelectPickerService {
     private injector: Injector
   ) { }
    
-  show(data: Array<any>){
+  show(data: Array<any>): void{
     const config = new OverlayConfig();
     const positionStrategy = this.overlay.position().global().centerVertically().centerHorizontally();
     config.positionStrategy = positionStrategy;  
-    config.hasBackdrop = false;
+    config.hasBackdrop = true;
     const overlayRef = this.overlay.create(config);
-
+    overlayRef.backdropClick().subscribe(() => {
+      overlayRef.dispose();
+    });
     const options = new SelectPickerOptions<any>();
     options.data = data;
     
@@ -31,13 +33,8 @@ export class SelectPickerService {
       ],
       parent: this.injector
     });
-
-
     const partal = new ComponentPortal(SelectPickerComponent,null,injector);
-    
     overlayRef.attach(partal);
-
-    // setTimeout(() => overlayRef.detach(),2000);
 
   }
 

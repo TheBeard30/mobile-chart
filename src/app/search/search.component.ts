@@ -16,5 +16,6 @@ export class SearchComponent implements OnInit {
   showPicker(): void{
     this.sps.show([9,5,7,1]);
   }
+  
 
 }

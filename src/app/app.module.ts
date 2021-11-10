@@ -19,6 +19,7 @@ import { PlaygroundModule } from './playground/playground.module';
 import { AreaChartComponent } from './charts/area-chart/area-chart.component';
 import { SearchComponent } from './search/search.component';
 import { SelectPickerComponent } from './datapicker/select-picker/select-picker.component';
+import { SelectPickerDirective } from './datapicker/select-picker.directive';
 
 
 const COMPONENTS = [
@@ -41,7 +42,8 @@ const DIRECTIVES = [
     MainComponent,
     AreaChartComponent,
     SearchComponent,
-    SelectPickerComponent
+    SelectPickerComponent,
+    SelectPickerDirective
   ],
   imports: [
     BrowserModule,
