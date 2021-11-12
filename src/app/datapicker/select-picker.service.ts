@@ -9,12 +9,14 @@ import { SelectPickerOptions } from './select-picker-options.provider';
 })
 export class SelectPickerService {
 
+  overlayRef: OverlayRef;
+
   constructor(
     private overlay: Overlay,
     private injector: Injector
   ) { }
    
-  show(data: Array<any>): void{
+  showPicker(pickerConfig: SelectPickerOptions,cancelCallBack?: () => void,confirmCallBack?: (result) => void | any): void{
     const config = new OverlayConfig();
     const positionStrategy = this.overlay.position().global().centerVertically().centerHorizontally();
     config.positionStrategy = positionStrategy;  
@@ -23,9 +25,17 @@ export class SelectPickerService {
     overlayRef.backdropClick().subscribe(() => {
       overlayRef.dispose();
     });
-    const options = new SelectPickerOptions<any>();
-    options.data = data;
+    const options = new SelectPickerOptions();
+    Object.assign(options,pickerConfig,{
+      hidePicker: (ev) => this.hidePicker(),
+      cancel: () => {if(cancelCallBack) cancelCallBack() },
+      confirm: (result) => {if(confirmCallBack) confirmCallBack(result) }
+    });
+
+    config.hasBackdrop = options.mask;
     
+    this.overlayRef = overlayRef;
+    // 生成注入器
     const injector = Injector.create({
       providers: [
         {provide: SelectPickerOptions,useValue: options},
@@ -35,29 +45,10 @@ export class SelectPickerService {
     });
     const partal = new ComponentPortal(SelectPickerComponent,null,injector);
     overlayRef.attach(partal);
-
   }
 
-
-  // 获取组件实例
-  getPortal(injector: Injector){
-
+  hidePicker(){
+    this.overlayRef.dispose();
   }
-
-  
-  getRef(overlayRef: OverlayRef){
-
-  }
-
-  // 获取注入器
-  getInjector(){
-
-  }
-   
-  // 获取位置策略
-  getPositionStrategy(){
-
-  }
-
 
 }

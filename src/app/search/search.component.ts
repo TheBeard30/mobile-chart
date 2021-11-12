@@ -8,14 +8,30 @@ import { SelectPickerService } from '../datapicker/select-picker.service';
 })
 export class SearchComponent implements OnInit {
 
+  data1 = [
+    {label: "普通门诊挂号费",value: "普通门诊挂号费"},
+    {label: "主任医师",value: "主任医师"},
+    {label: "急诊诊查费",value: "急诊诊查费"},
+  ]
+
+  data2 = [
+    {label: "普通门诊挂号费",value: "普通门诊挂号费"},
+    {label: "主任医师",value: "主任医师"},
+    {label: "急诊诊查费",value: "急诊诊查费"},
+  ]
+
   constructor(private sps: SelectPickerService) { }
 
   ngOnInit(): void {
   }
 
-  showPicker(): void{
-    this.sps.show([9,5,7,1]);
+
+  reset(): void{
+    console.log('取消触发');
   }
-  
+
+  pickerChange($event){
+    console.log("pickerChange触发",$event);
+  }
 
 }

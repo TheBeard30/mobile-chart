@@ -1,3 +1,5 @@
+@button-color: #4980FF;
+
 .panel{
     width: 100%;
     height: 300px;
@@ -8,3 +10,61 @@
     border-top-left-radius: 10px;
     border-top-right-radius: 10px;
 }
+
+.picker-header{
+    display: flex;
+    border-bottom: 1px solid #F0F0F0;
+    font-size: 16px;
+    line-height: 22px;
+    padding: 12px 15px;
+}
+
+.picker-header .reset{
+    cursor: pointer;
+    text-align: left;
+    flex: auto;
+    color: @button-color;
+}
+
+.picker-header .title{
+    flex: auto;
+    text-align: center;
+}
+
+.picker-header .confirm{
+    cursor: pointer;
+    text-align: right;
+    flex: auto;
+    color: @button-color;
+}
+
+.picker-content{
+    padding: 20px 15px;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    overflow: auto;
+    height: 100%;
+}
+
+
+
+.picker-content .optionValue{
+    padding-left: 4px;
+    width: calc((100% - 34px) / 3);
+    height: 28px;
+    line-height: 28px;
+    vertical-align: middle;
+    border: 1px solid rgb(221,221, 221);
+    border-radius: 2px;
+    margin-bottom: 15px;
+    white-space:nowrap;
+    overflow:hidden;
+    text-overflow:ellipsis;
+}
+
+.picker-content .checked{
+    border-color: @button-color;
+    color: @button-color;
+}
+

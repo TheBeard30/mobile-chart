@@ -1,45 +1,63 @@
 import { animate, state, style, transition, trigger } from '@angular/animations';
-import { Component, OnInit } from '@angular/core';
+import { Component, HostListener, OnInit } from '@angular/core';
 import { SelectPickerOptions } from '../select-picker-options.provider';
 import { OverlayRef } from '@angular/cdk/overlay';
+import { pickerAnimation } from './select-picker.animations';
 @Component({
   selector: 'app-select-picker',
   templateUrl: './select-picker.component.html',
   styleUrls: ['./select-picker.component.less'],
-  animations: [
-    trigger("open-close",[
-      state("open",style({
-        opacity: 1,
-        height: "300px"
-      })),
-      state("close",style({
-        opacity: 0,
-        height: 0
-      })),
-      transition('open=>close', [
-        animate("1s")
-      ]),
-      transition('close=>open', [
-        animate("1s")
-      ]),
-    ])
-  ]
+  animations: [pickerAnimation]
 })
 export class SelectPickerComponent implements OnInit {
   
   isOpen: boolean = false;
+
+  selectValue: any;
   
   constructor(
-    public selectOptions: SelectPickerOptions<any>,
+    public selectOptions: SelectPickerOptions,
     public overlayRef: OverlayRef
   ) { }
 
   ngOnInit(): void {
-    
+    this.selectOptions.data.forEach(v => v.checked = false);
   }
 
   ngAfterViewInit(): void{
     setTimeout(() => this.isOpen = true);
   }
+
+
+  reset(): void{
+    this.selectOptions.hidePicker();
+    this.selectOptions.cancel();
+    this.selectOptions.onReset.emit();
+  }
+
+   
+  confirm(): void{
+    this.selectOptions.hidePicker();
+    this.selectOptions.confirm(this.selectValue);
+  }
+
+
+  @HostListener("touchend",["$event"])
+  @HostListener("mouseup",["$event"])
+  @HostListener("mouseleave",["$event"])
+  penend(event){
+    if(!event.target.classList.contains("optionValue")) return;
+    this.selectOptions.onPickerChange.emit("选择值改变测试");
+  }
+
+
+  chooseOption(option: {[p: string]: any}): void{
+    option.checked = !option.checked;
+  }
+
+
+  
+
+
 
 }

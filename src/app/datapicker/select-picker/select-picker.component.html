@@ -1,6 +1,13 @@
 <div class="panel" [@open-close]="isOpen ? 'open' : 'close'">
-    <div *ngFor="let item of selectOptions.data">
-        {{item}}
+    <div class="picker-header">
+        <label class="reset" (click)="reset()">重置</label>
+        <span class="title">{{selectOptions.title}}</span>
+        <label class="confirm" (click)="confirm()">确定</label>
+    </div>
+    <div class="picker-content">
+        <div *ngFor="let item of selectOptions.data;" [class.checked]="item.checked" class="optionValue" (click)="chooseOption(item)">
+            {{item.label}}
+        </div>
     </div>
 </div>
 
