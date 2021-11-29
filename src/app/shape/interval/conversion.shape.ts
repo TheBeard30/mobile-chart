@@ -8,14 +8,12 @@ import { RegisterShape, ShapeInfo, ShapeMarkerCfg, ShapePoint } from '@antv/g2/l
 registerShape('interval','conversion',{
   // getPoints: (pointInfo: ShapePoint) => {
   //   console.log("pointInfo>>>",pointInfo);
-  //   return [];
   // },
   // getMarker: (markerCfg: ShapeMarkerCfg) => {
   //   console.log("markerCfg>>>",markerCfg);
   // },
   draw(cfg: ShapeInfo,container: IGroup){
-    // console.log("shapeInfo>>>",cfg);
-    // console.log("container>>>",container);
+
     const points = this.parsePoints(cfg.points); // 将0-1空间的坐标转换为画布坐标
     const _shape = container.addShape({
       type: "path",
@@ -37,6 +35,11 @@ registerShape('interval','conversion',{
 
 let previousNode = null;
 
+/**
+ * 绘制转化率
+ * @param {ShapeInfo}  cfg         图形信息
+ * @param {IGroup}     container   容器
+ */
 function drawConversionRate(cfg: ShapeInfo,container: IGroup): void{
 
   if(previousNode){
@@ -61,11 +64,8 @@ function drawConversionRate(cfg: ShapeInfo,container: IGroup): void{
     });
 
     const group = container.addGroup();
-
-
     // @ts-ignore
     const rate = ((cfg.data.value/previousNode.data.value) * 100).toFixed(2) + '%';
-    console.log(rate);
     const textShape = group.addShape({
       type: 'text',
       attrs: {
@@ -76,7 +76,6 @@ function drawConversionRate(cfg: ShapeInfo,container: IGroup): void{
       }
     });
     const textBox = textShape.getCanvasBBox();
-
     const arrowPath = [
       ['M', textBox.minX,textBox.minY - 5],
       ['L', textBox.minX,textBox.maxY + 5],
@@ -86,7 +85,6 @@ function drawConversionRate(cfg: ShapeInfo,container: IGroup): void{
       ['L', textBox.minX,textBox.minY - 5],
       ['Z']
     ];
-
     group.addShape({
       type: 'path',
       attrs: {
@@ -95,8 +93,6 @@ function drawConversionRate(cfg: ShapeInfo,container: IGroup): void{
         path: arrowPath,
       }
     });
-
-
   }
   previousNode = cfg;
 }

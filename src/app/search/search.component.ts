@@ -12,6 +12,9 @@ export class SearchComponent implements OnInit {
     {label: "普通门诊挂号费",value: "普通门诊挂号费"},
     {label: "主任医师",value: "主任医师"},
     {label: "急诊诊查费",value: "急诊诊查费"},
+    {label: "普通门诊挂号费",value: "普通门诊挂号费"},
+    {label: "主任医师",value: "主任医师"},
+    {label: "急诊诊查费",value: "急诊诊查费"},
   ]
 
   data2 = [

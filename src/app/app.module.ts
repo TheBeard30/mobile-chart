@@ -20,6 +20,8 @@ import { AreaChartComponent } from './charts/area-chart/area-chart.component';
 import { SearchComponent } from './search/search.component';
 import { SelectPickerComponent } from './datapicker/select-picker/select-picker.component';
 import { SelectPickerDirective } from './datapicker/select-picker.directive';
+import { SpreadSheetsModule } from '@grapecity/spread-sheets-angular';
+import { CrossReportComponent } from './spreadsheet/cross-report/cross-report.component';
 
 
 const COMPONENTS = [
@@ -43,7 +45,8 @@ const DIRECTIVES = [
     AreaChartComponent,
     SearchComponent,
     SelectPickerComponent,
-    SelectPickerDirective
+    SelectPickerDirective,
+    CrossReportComponent
   ],
   imports: [
     BrowserModule,
@@ -53,7 +56,8 @@ const DIRECTIVES = [
     HttpClientModule,
     OverlayModule,
     NgZorroAntdMobileModule,
-    PlaygroundModule
+    PlaygroundModule,
+    SpreadSheetsModule
   ],
   providers: [],
   bootstrap: [AppComponent]

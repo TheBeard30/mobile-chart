@@ -32,16 +32,17 @@
             ],
             "styles": [
               "node_modules/ng-zorro-antd-mobile/src/ng-zorro-antd-mobile.min.css",
-              "src/styles.less"
+              "src/styles.less",
+              "node_modules/@grapecity/spread-sheets/styles/gc.spread.sheets.excel2013white.css"
             ],
             "scripts": []
           },
           "configurations": {
             "production": {
-              "optimization": { 
-                "scripts": true, 
+              "optimization": {
+                "scripts": true,
                 "fonts": { "inline": true },
-                "styles": { "minify": true, "inlineCritical": false } 
+                "styles": { "minify": true, "inlineCritical": false }
               },
               "budgets": [
                 {

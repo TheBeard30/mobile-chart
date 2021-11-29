@@ -6,6 +6,8 @@ import { fromEvent } from 'rxjs';
 import { debounceTime } from 'rxjs/operators';
 import { pointGeometrySetting,lineGeometrySetting } from 'src/app/util/chart.setting';
 import { customChartEvents } from 'src/app/util/custom-event.util';
+import { setAxisConfig } from '../config/axis.config';
+import { generateChartCommonConfig } from '../config/common.config';
 import { showXTooltipCrosshairsTextConfig } from '../config/tooltip.config';
 import { ChartService } from '../service/chart.service';
 import { chartData } from './mock.data';
@@ -27,13 +29,13 @@ export class LineChartComponent implements OnInit,AfterViewInit,OnDestroy {
     private chartService: ChartService,
     private router: Router,
     private elementRef: ElementRef
-  ) { 
+  ) {
     setTimeout(() => {
       const observable = this.chartService.subscribeThemeSubject(this.chart);
       observable.subscribe(theme => this.themeClass = {'dark-theme': theme == 'dark'});
     });
   }
-  
+
 
   ngOnInit(): void {
     fromEvent(window,'resize').pipe(debounceTime(500)).subscribe(ev => this.chart.forceFit());
@@ -51,16 +53,23 @@ export class LineChartComponent implements OnInit,AfterViewInit,OnDestroy {
       width: domRect.width,
       height: domRect.height
     });
+    const data = chartData.map(v => {
+      //@ts-ignore
+      v.x = v.month;
+      delete v.month;
+      return v;
+    })
 
-    this.chart.data(chartData);
+    this.chart.data(data);
     this.chart.scale({
-      month: {
+      x: {
         range: [0, 1],
       },
       temperature: {
         nice: true,
       },
     });
+
     this.chart.tooltip(showXTooltipCrosshairsTextConfig);
 
     this.chart.axis('temperature', {
@@ -71,21 +80,19 @@ export class LineChartComponent implements OnInit,AfterViewInit,OnDestroy {
       },
     });
 
-    lineGeometrySetting(this.chart,{},'month','temperature','city','smooth');;
-    pointGeometrySetting(this.chart,{},'month','temperature','city','circle');
+    const geometry = lineGeometrySetting(this.chart,{},'x','temperature','city','smooth');;
+    pointGeometrySetting(this.chart,{},'x','temperature','city','circle');
+    generateChartCommonConfig(this.chart,geometry,{});
     this.chart.option('scrollbar', {
       type: 'horizontal',
-    });  
+    });
     this.chart.legend(false);
     this.chart.render();
     customChartEvents(this.chart);
   }
 
   landscape(ev){
-    const element: HTMLElement = this.elementRef.nativeElement.querySelector('.wrapper');
-    element.style.transform = "rotate(90deg)";
-    element.style.width = "100%";
-    element.style.height = "100%";
+    this.router.navigate(['/landscape']);
   }
 
 }

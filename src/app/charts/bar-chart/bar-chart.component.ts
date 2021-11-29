@@ -5,6 +5,7 @@ import { ChartService } from '../service/chart.service';
 import DataSet from '@antv/data-set';
 import { fromEvent } from 'rxjs';
 import { debounceTime } from 'rxjs/operators';
+import "../../shape/interval/conversion.shape";
 
 @Component({
   selector: 'app-bar-chart',
@@ -15,13 +16,13 @@ export class BarChartComponent implements OnInit,AfterViewInit {
 
   chart: Chart;
 
-  @ViewChild("container")  container: ElementRef; 
+  @ViewChild("container")  container: ElementRef;
 
   themeClass:{'dark-theme': boolean};
 
   constructor(
     private chartService: ChartService
-  ) { 
+  ) {
     setTimeout(() => {
       const observable = this.chartService.subscribeThemeSubject(this.chart);
       observable.subscribe(theme => this.themeClass = {'dark-theme': theme == 'dark'});
@@ -30,7 +31,10 @@ export class BarChartComponent implements OnInit,AfterViewInit {
 
   ngOnInit(): void {
     registerTriangleShape();
-    fromEvent(window,'resize').pipe(debounceTime(500)).subscribe(ev => this.chart.forceFit());
+    fromEvent(window,'resize').pipe(debounceTime(500)).subscribe(ev => {
+      this.chart.forceFit();
+
+    });
   }
 
   ngAfterViewInit(): void{
@@ -54,19 +58,19 @@ export class BarChartComponent implements OnInit,AfterViewInit {
     });
     const view = this.chart.createView();
     view.data(data);
-    const geometry = view.interval().position('type*value').color('type');
-    view.interaction('element-active');
-    this.createTrendLine(this.chart,data);
-    
+    const geometry = view.interval().position('type*value').color('type').shape('conversion');
+    // view.interaction('element-active');
+    // this.createTrendLine(this.chart,data);
+
     this.chart.render();
-    setTimeout(() => {
-      this.createPath(view);
-    },1000);
+    // setTimeout(() => {
+    //   this.createPath(view);
+    // },1000);
   }
 
   /**
    * 添加路径
-   * @param {View}  view  视图 
+   * @param {View}  view  视图
    */
   createPath(view: View): void{
     console.log(view);
@@ -87,9 +91,9 @@ export class BarChartComponent implements OnInit,AfterViewInit {
 
   /**
    * 添加连接的图形
-   * @param group 
-   * @param element 
-   * @param nextElement 
+   * @param group
+   * @param element
+   * @param nextElement
    */
   private addLinkShape(group: IGroup, element: Element, nextElement: Element) {
     group.addShape({
@@ -106,7 +110,7 @@ export class BarChartComponent implements OnInit,AfterViewInit {
    * 获取连接的路径
    * @param {Element}   element        当前的节点
    * @param {Element}   nextElement    下一个节点
-   * @returns 
+   * @returns
    */
   private getLinkPath(element: Element, nextElement: Element) {
     const bbox = element.shape.getCanvasBBox();
@@ -124,7 +128,7 @@ export class BarChartComponent implements OnInit,AfterViewInit {
 
   /**
    * 添加趋势线
-   * @param {Chart}  chart  图表实例 
+   * @param {Chart}  chart  图表实例
    * @param {Array}  data   图表数据
    */
   createTrendLine(chart: Chart,data: Array<any>): void{
