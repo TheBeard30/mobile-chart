@@ -32,8 +32,7 @@ export class BarChartComponent implements OnInit,AfterViewInit {
   ngOnInit(): void {
     registerTriangleShape();
     fromEvent(window,'resize').pipe(debounceTime(500)).subscribe(ev => {
-      this.chart.forceFit();
-
+      // this.chart.forceFit();
     });
   }
 
@@ -54,7 +53,8 @@ export class BarChartComponent implements OnInit,AfterViewInit {
     this.chart = new Chart({
       container: element,
       width: rect.width,
-      height: rect.height
+      height: rect.height,
+      autoFit: true
     });
     const view = this.chart.createView();
     view.data(data);

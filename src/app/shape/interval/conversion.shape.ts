@@ -15,7 +15,8 @@ registerShape('interval','conversion',{
   draw(cfg: ShapeInfo,container: IGroup){
 
     const points = this.parsePoints(cfg.points); // 将0-1空间的坐标转换为画布坐标
-    const _shape = container.addShape({
+    const group = container.addGroup();
+    const _shape = group.addShape({
       type: "path",
       attrs: {
         path: [
@@ -28,8 +29,9 @@ registerShape('interval','conversion',{
         fill: cfg.color
       },
     });
-    drawConversionRate.call(this,cfg,container);
-    return _shape;
+
+    drawConversionRate.call(this,cfg,group);
+    return group;
   }
 } as RegisterShape);
 
@@ -38,11 +40,12 @@ let previousNode = null;
 /**
  * 绘制转化率
  * @param {ShapeInfo}  cfg         图形信息
- * @param {IGroup}     container   容器
+ * @param {IGroup}     group       容器
  */
-function drawConversionRate(cfg: ShapeInfo,container: IGroup): void{
-
+function drawConversionRate(cfg: ShapeInfo,group: IGroup): void{
+  //@ts-ignore
   if(previousNode){
+
     const currentPoints = this.parsePoints(cfg.points);
     const previousPoints = this.parsePoints(previousNode.points);
     // 绘制转化率
@@ -54,7 +57,7 @@ function drawConversionRate(cfg: ShapeInfo,container: IGroup): void{
       ['Z'],
     ];
 
-    container.addShape({
+    group.addShape({
       type: 'path',
       attrs: {
         opacity: 0.3,
@@ -63,7 +66,6 @@ function drawConversionRate(cfg: ShapeInfo,container: IGroup): void{
       },
     });
 
-    const group = container.addGroup();
     // @ts-ignore
     const rate = ((cfg.data.value/previousNode.data.value) * 100).toFixed(2) + '%';
     const textShape = group.addShape({
